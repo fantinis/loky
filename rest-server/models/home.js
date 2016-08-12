@@ -7,7 +7,7 @@ var homeSchema = new Schema({
         type: String,        
         required: true
     },
-    dascription:  {
+    description:  {
         type: String,        
         required: true
     },
