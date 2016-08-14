@@ -3,19 +3,20 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var HotSpots = require('../models/hotSpot.js');
+var Verify = require('./verify');
 
 var hotSpotsRouter = express.Router();
 hotSpotsRouter.use(bodyParser.json());
 
 hotSpotsRouter.route('/')
-.get(function (req, res, next) {
+.get(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.find({}, function (err, hotSpot) {
         if (err) throw err;
         res.json(hotSpot);
     });
 })
 
-.post(function (req, res, next) {
+.post(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.create(req.body, function (err, hotSpot) {
         if (err) throw err;
         console.log('HotSpots created!');
@@ -28,7 +29,7 @@ hotSpotsRouter.route('/')
     });
 })
 
-.delete(function (req, res, next) {
+.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.remove({}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
@@ -36,14 +37,14 @@ hotSpotsRouter.route('/')
 });
 
 hotSpotsRouter.route('/:hotspotId')
-.get(function (req, res, next) {
+.get(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.findById(req.params.hotspotId, function (err, hotspot) {
         if (err) throw err;
         res.json(hotspot);
     });
 })
 
-.put(function (req, res, next) {
+.put(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.findByIdAndUpdate(req.params.hotspotId, {
         $set: req.body
     }, {
@@ -54,7 +55,7 @@ hotSpotsRouter.route('/:hotspotId')
     });
 })
 
-.delete(function (req, res, next) {
+.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.findByIdAndRemove(req.params.hotspotId, function (err, resp) {
         if (err) throw err;
         res.json(resp);
@@ -62,14 +63,14 @@ hotSpotsRouter.route('/:hotspotId')
 });
 
 hotSpotsRouter.route('/:hotspotId/sensorsData')
-.get(function (req, res, next) {
+.get(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.findById(req.params.hotspotId, function (err, hotspot) {
         if (err) throw err;
         res.json(hotspot.sensorsData);
     });
 })
 
-.post(function (req, res, next) {
+.post(Verify.verifyOrdinaryUser, function (req, res, next) {
     HotSpots.findById(req.params.hotspotId, function (err, hotspot) {
         if (err) throw err;
         hotspot.sensorsData.push(req.body);
@@ -81,7 +82,7 @@ hotSpotsRouter.route('/:hotspotId/sensorsData')
     });
 })
 
-.delete(function (req, res, next) {
+.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
     hotspot.findById(req.params.hotspotId, function (err, hotspot) {
         if (err) throw err;
         for (var i = (hotspot.sensorsData.length - 1); i >= 0; i--) {

@@ -3,8 +3,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var Homes = require('../models/home.js');
+var Verify = require('./verify');
 
 var homesRouter = express.Router();
+
 homesRouter.use(bodyParser.json());
 
 homesRouter.route('/')
@@ -15,7 +17,7 @@ homesRouter.route('/')
     });
 })
 
-.post(function (req, res, next) {
+.post(Verify.verifyOrdinaryUser, function (req, res, next) {
     Homes.create(req.body, function (err, home) {
         if (err) throw err;
         console.log('Home created!');
@@ -28,7 +30,7 @@ homesRouter.route('/')
     });
 })
 
-.delete(function (req, res, next) {
+.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
     Homes.remove({}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
@@ -43,7 +45,7 @@ homesRouter.route('/:homeId')
     });
 })
 
-.put(function (req, res, next) {
+.put(Verify.verifyOrdinaryUser, function (req, res, next) {
     Homes.findByIdAndUpdate(req.params.homeId, {
         $set: req.body
     }, {
@@ -54,7 +56,7 @@ homesRouter.route('/:homeId')
     });
 })
 
-.delete(function (req, res, next) {
+.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
     Homes.findByIdAndRemove(req.params.homeId, function (err, resp) {
         if (err) throw err;
         res.json(resp);
