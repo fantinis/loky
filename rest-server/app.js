@@ -23,6 +23,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var hotSpotRouter = require('./routes/hotSpotRouter');
 var homeRouter = require('./routes/homeRouter');
+var sensorDataRouter = require('./routes/sensorDataRouter');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/hotspot',hotSpotRouter);
 app.use('/home',homeRouter);
+app.use('/data',sensorDataRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
