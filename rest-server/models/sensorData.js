@@ -3,48 +3,52 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var sensorDataSchema = new Schema({
-    ip:  {
+    LastSeen:{
+        type:String,
+        required: false
+    },
+    IP:  {
         type: String,        
         required: false
     },
-    uid:  {
+    UID:  {
         type: String,        
         required: false
     },
-    name:  {
+    Name:  {
         type: String,        
         required: false
     },
-    sw:  {
+    SW:  {
         type: Number,        
         required: false
     },
-    vdd:  {
+    Vdd:  {
         type: Number,        
         required: false
     },
-    cpuTemp:  {
+    CpuTemp:  {
         type: Number,        
         required: false
     },
-    accTemp:  {
-        type: Number,        
-        required: false
-    },
-    accDataX:  {
-        type: Number,        
-        required: false
-    },
-    accDataY:  {
-        type: Number,        
-        required: false
-    },
-    accDataZ:  {
+    AccTemp:  {
         type: Number,        
         required: false
     },
     WakeUp:  {
         type: String,
+        required: false
+    },
+    AccDataX:  {
+        type: Number,        
+        required: false
+    },
+    AccDataY:  {
+        type: Number,        
+        required: false
+    },
+    AccDataZ:  {
+        type: Number,        
         required: false
     }
 }, {
