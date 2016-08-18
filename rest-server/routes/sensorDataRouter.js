@@ -9,7 +9,7 @@ var sensorDatasRouter = express.Router();
 sensorDatasRouter.use(bodyParser.json());
 
 sensorDatasRouter.route('/')
-.get(Verify.verifyOrdinaryUser, function (req, res, next) {
+.get(function (req, res, next) {
     SensorDatas.find({}, function (err, sensorData) {
         if (err) throw err;
         res.json(sensorData);
