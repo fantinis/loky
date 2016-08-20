@@ -20,15 +20,26 @@
             // Quick panel
             'app.quick-panel',
 
-            // App            
+            // Apps
             'app.dashboards',
-            
+            'app.calendar',
+            'app.e-commerce',
+            'app.mail',
+            'app.chat',
+            'app.file-manager',
+            'app.scrumboard',
+            'app.gantt-chart',
+            'app.todo',
+            'app.contacts',
+            'app.notes',
+
             // Pages
             'app.pages',
 
-            //dependencies & libraries necessary
-            'nvd3',
-            'datatables'
+            // User Interface
+            'app.ui',
 
+            // Components
+            'app.components'
         ]);
 })();

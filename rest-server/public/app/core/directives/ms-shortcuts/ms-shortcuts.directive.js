@@ -203,14 +203,38 @@
             {
                 shortcuts = [
                     {
-                        'title'      : 'Sample',
-                        'icon'       : 'icon-tile-four',
-                        'state'      : 'app.sample',
-                        'weight'     : 1,
+                        'title'      : 'Chat',
+                        'icon'       : 'icon-hangouts',
+                        'state'      : 'app.chat',
+                        'badge'      : {
+                            'content': 13,
+                            'color'  : '#09d261'
+                        },
+                        'weight'     : 5,
                         'children'   : [],
-                        '_id'        : 'sample',
-                        '_path'      : 'apps.sample',
-                        'uisref'     : 'app.sample',
+                        '_id'        : 'chat',
+                        '_path'      : 'apps.chat',
+                        'uisref'     : 'app.chat',
+                        'hasShortcut': true
+                    }, {
+                        'title'      : 'Contacts',
+                        'icon'       : 'icon-account-box',
+                        'state'      : 'app.contacts',
+                        'weight'     : 10,
+                        'children'   : [],
+                        '_id'        : 'contacts',
+                        '_path'      : 'apps.contacts',
+                        'uisref'     : 'app.contacts',
+                        'hasShortcut': true
+                    }, {
+                        'title'      : 'Notes',
+                        'icon'       : 'icon-lightbulb',
+                        'state'      : 'app.notes',
+                        'weight'     : 11,
+                        'children'   : [],
+                        '_id'        : 'notes',
+                        '_path'      : 'apps.notes',
+                        'uisref'     : 'app.notes',
                         'hasShortcut': true
                     }
                 ];

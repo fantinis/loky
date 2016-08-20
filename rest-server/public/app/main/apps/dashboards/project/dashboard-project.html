@@ -7,7 +7,7 @@
         <div class="header md-accent-bg" layout="column" layout-align="space-between">
             <div layout="row" layout-align="space-between">
                 <div>
-                    <span class="md-display-1 font-weight-300">Welcome back, Stefano!</span>
+                    <span class="md-display-1 font-weight-300">Welcome back, John!</span>
                 </div>
 
                 <div class="toolbar">
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <!--<div layout="row">
+            <div layout="row">
                 <div class="selected-project">{{vm.selectedProject.name}}</div>
 
                 <md-menu id="projects-menu" md-offset="0 48">
@@ -35,7 +35,7 @@
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
-            </div>-->
+            </div>
         </div>
         <!-- / HEADER -->
 
@@ -453,7 +453,7 @@
 
                 </md-tab>
 
-                <md-tab label="Hot Spot">
+                <md-tab label="Budget Summary">
 
                     <!-- WIDGET GROUP -->
                     <div class="widget-group" layout="row" flex="100" layout-wrap>
@@ -613,84 +613,25 @@
 
                 </md-tab>
 
-                <md-tab label="Raw Sensor Data">
+                <md-tab label="Team Members">
 
                     <!-- WIDGET GROUP -->
                     <div class="widget-group" layout="row" flex="100" layout-wrap>
 
-                         <!-- WIDGET 11 -->
+                        <!-- WIDGET 11 -->
                         <ms-widget layout="row" flex="100">
-
 
                             <!-- Front -->
                             <ms-widget-front class="white-bg">
 
-
                                 <div class="p-24 mb-8 border-bottom" layout="row" layout-align="space-between center">
                                     <div class="h2">{{vm.widget11.title}}</div>
-                                    <div class="text-boxed red-bg white-fg m-0">{{vm.widget11.table.length}}
-                                        recods
+                                    <div class="text-boxed red-bg white-fg m-0">{{vm.widget11.table.rows.length}}
+                                        members
                                     </div>
                                 </div>
-                                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.widget11.dtOptions">
-                                <thead>
-                                    <tr>
-                                        <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">LastSeen</span>
-                                            </div>
-                                        </th>
-                                        <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">Name</span>
-                                            </div>
-                                        </th>
-                                        <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">Vdd</span>
-                                            </div>
-                                        </th>
-                                        <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">CpuTemp</span>
-                                            </div>
-                                        </th>
-                                        <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">AccTemp</span>
-                                            </div>
-                                        </th>
-                                        <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">WakeUp</span>
-                                            </div>
-                                        </th>
-                                         <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">AccDataX</span>
-                                            </div>
-                                        </th>
-                                        <th class="secondary-text">
-                                            <div class="table-header">
-                                                <span class="column-title">AccDataZ</span>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="sensorData in ::vm.widget11.table">
-                                        <td>{{ sensorData.LastSeen }}</td>
-                                        <td>{{ sensorData.Name }}</td>
-                                        <td>{{ sensorData.Vdd }}</td>
-                                        <td>{{ sensorData.CpuTemp }}</td>
-                                        <td>{{ sensorData.AccTemp }}</td>
-                                        <td>{{ sensorData.WakeUp }}</td>
-                                        <td>{{ sensorData.AccDataX }}</td>
-                                        <td>{{ sensorData.AccDataZ }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                                <!--<table class="dataTable row-border hover" datatable="ng"
+
+                                <table class="dataTable row-border hover" datatable="ng"
                                        dt-options="vm.widget11.dtOptions">
                                     <thead>
                                         <tr>
@@ -713,12 +654,10 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>-->
-
+                                </table>
 
                             </ms-widget-front>
                             <!-- / Front -->
-
 
                         </ms-widget>
                         <!-- / WIDGET 11 -->
