@@ -41,5 +41,5 @@ node-express-gen
 #node-moongose
 node-moongose
 
-#dashboard
-dashboard
+#dashboard folder
+/dashboard
