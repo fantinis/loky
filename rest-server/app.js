@@ -54,12 +54,14 @@ app.all('*', function(req, res, next){
  res.redirect('https://'+req.hostname+':'+app.get('secPort')+req.url);
 });
 
-app.use('/', routes);
-app.use('/dashboard-project', routes);
+
 app.use('/users', users);
 app.use('/hotspot',hotSpotRouter);
 app.use('/home',homeRouter);
 app.use('/data',sensorDataRouter);
+
+//default route index html
+app.use('/*', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
