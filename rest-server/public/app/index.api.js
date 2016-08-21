@@ -4,7 +4,146 @@
 
     angular
         .module('fuse')
-        .factory('api', apiService);
+        .factory('api', apiService)
+
+
+        //-----------------
+
+        .factory('$localStorage', ['$window', function ($window) {
+            return {
+                store: function (key, value) {
+                    $window.localStorage[key] = value;
+                },
+                get: function (key, defaultValue) {
+                    return $window.localStorage[key] || defaultValue;
+                },
+                remove: function (key) {
+                    $window.localStorage.removeItem(key);
+                },
+                storeObject: function (key, value) {
+                    $window.localStorage[key] = JSON.stringify(value);
+                },
+                getObject: function (key, defaultValue) {
+                    return JSON.parse($window.localStorage[key] || defaultValue);
+                }
+            }
+        }])
+
+        .factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', 
+        function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
+            
+            var authFac = {};
+            var TOKEN_KEY = 'Token';
+            var isAuthenticated = false;
+            var username = '';
+            var authToken = undefined;
+            
+
+        function loadUserCredentials() {
+            var credentials = $localStorage.getObject(TOKEN_KEY,'{}');
+            if (credentials.username != undefined) {
+            useCredentials(credentials);
+            }
+        }
+        
+        function storeUserCredentials(credentials) {
+            $localStorage.storeObject(TOKEN_KEY, credentials);
+            useCredentials(credentials);
+        }
+        
+        function useCredentials(credentials) {
+            isAuthenticated = true;
+            username = credentials.username;
+            authToken = credentials.token;
+        
+            // Set the token as header for your requests!
+            $http.defaults.headers.common['x-access-token'] = authToken;
+        }
+        
+        function destroyUserCredentials() {
+            authToken = undefined;
+            username = '';
+            isAuthenticated = false;
+            $http.defaults.headers.common['x-access-token'] = authToken;
+            $localStorage.remove(TOKEN_KEY);
+        }
+            
+            authFac.login = function(loginData) {
+                
+                $resource(baseURL + "users/login")
+                .save(loginData,
+                function(response) {
+                    storeUserCredentials({username:loginData.username, token: response.token});
+                    $rootScope.$broadcast('login:Successful');
+                },
+                function(response){
+                    isAuthenticated = false;
+                    
+                    var message = '\
+                        <div class="ngdialog-message">\
+                        <div><h3>Login Unsuccessful</h3></div>' +
+                        '<div><p>' +  response.data.err.message + '</p><p>' +
+                            response.data.err.name + '</p></div>' +
+                        '<div class="ngdialog-buttons">\
+                            <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm("OK")>OK</button>\
+                        </div>'
+                    
+                        ngDialog.openConfirm({ template: message, plain: 'true'});
+                }
+                
+                );
+
+            };
+            
+            authFac.logout = function() {
+                $resource(baseURL + "users/logout").get(function(response){
+                });
+                destroyUserCredentials();
+            };
+            
+            authFac.register = function(registerData) {
+                
+                $resource(baseURL + "users/register")
+                .save(registerData,
+                function(response) {
+                    authFac.login({username:registerData.username, password:registerData.password});
+                    if (registerData.rememberMe) {
+                        $localStorage.storeObject('userinfo',
+                            {username:registerData.username, password:registerData.password});
+                    }
+                
+                    $rootScope.$broadcast('registration:Successful');
+                },
+                function(response){
+                    
+                    var message = '\
+                        <div class="ngdialog-message">\
+                        <div><h3>Registration Unsuccessful</h3></div>' +
+                        '<div><p>' +  response.data.err.message + 
+                        '</p><p>' + response.data.err.name + '</p></div>';
+
+                        ngDialog.openConfirm({ template: message, plain: 'true'});
+
+                }
+                
+                );
+            };
+            
+            authFac.isAuthenticated = function() {
+                return isAuthenticated;
+            };
+            
+            authFac.getUsername = function() {
+                return username;  
+            };
+
+            loadUserCredentials();
+            
+            return authFac;
+            
+        }])
+
+        //-----------------
 
     /** @ngInject */
     function apiService($resource)
@@ -180,80 +319,7 @@
         // Base Url
         api.baseUrl = 'app/data/';
 
-        /**
-         * Here you can find all the definitions that the Demo Project requires
-         *
-         * If you wish to use this method, you can create your API definitions
-         * in a similar way.
-         */
-
-        /*
-         api.dashboard = {
-         project  : $resource(api.baseUrl + 'dashboard/project/data.json'),
-         server   : $resource(api.baseUrl + 'dashboard/server/data.json'),
-         analytics: $resource(api.baseUrl + 'dashboard/analytics/data.json')
-         };
-
-         api.cards = $resource(api.baseUrl + 'cards/cards.json');
-
-         api.fileManager = {
-         documents: $resource(api.baseUrl + 'file-manager/documents.json')
-         };
-
-         api.ganttChart = {
-         tasks: $resource(api.baseUrl + 'gantt-chart/tasks.json'),
-         timespans : $resource(api.baseUrl + 'gantt-chart/timespans.json')
-         };
-
-         api.icons = $resource('assets/icons/selection.json');
-
-         api.invoice = $resource(api.baseUrl + 'invoice/invoice.json');
-
-         api.mail = {
-         inbox: $resource(api.baseUrl + 'mail/inbox.json')
-         };
-
-         api.profile = {
-         timeline    : $resource(api.baseUrl + 'profile/timeline.json'),
-         about       : $resource(api.baseUrl + 'profile/about.json'),
-         photosVideos: $resource(api.baseUrl + 'profile/photos-videos.json')
-         };
-
-         api.quickPanel = {
-         activities: $resource(api.baseUrl + 'quick-panel/activities.json'),
-         contacts  : $resource(api.baseUrl + 'quick-panel/contacts.json'),
-         events    : $resource(api.baseUrl + 'quick-panel/events.json'),
-         notes     : $resource(api.baseUrl + 'quick-panel/notes.json')
-         };
-
-         api.search = {
-         classic : $resource(api.baseUrl + 'search/classic.json'),
-         mails   : $resource(api.baseUrl + 'search/mails.json'),
-         users   : $resource(api.baseUrl + 'search/users.json'),
-         contacts: $resource(api.baseUrl + 'search/contacts.json')
-         };
-
-         api.scrumboard = {
-         boardList: $resource(api.baseUrl + 'scrumboard/boardList.json'),
-         board    : $resource(api.baseUrl + 'scrumboard/boards/:id.json')
-         };
-
-         api.tables = {
-         employees   : $resource(api.baseUrl + 'tables/employees.json'),
-         employees100: $resource(api.baseUrl + 'tables/employees100.json')
-         };
-
-         api.timeline = {
-         page1: $resource(api.baseUrl + 'timeline/page-1.json'),
-         page2: $resource(api.baseUrl + 'timeline/page-2.json'),
-         page3: $resource(api.baseUrl + 'timeline/page-3.json')
-         };
-
-         api.todo = {
-         tasks: $resource(api.baseUrl + 'todo/tasks.json'),
-         tags : $resource(api.baseUrl + 'todo/tags.json')
-         };
-         */
+        // api.sample = $resource(api.baseUrl + 'sample/sample.json');
 
         return api;
     }

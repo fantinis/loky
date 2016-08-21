@@ -2,30 +2,40 @@
 {
     'use strict';
 
+
     angular
         .module('app.dashboards.project')
         .controller('DashboardProjectController', DashboardProjectController);
 
+
     /** @ngInject */
-    function DashboardProjectController($scope, $interval, $mdSidenav, DashboardData)
+    function DashboardProjectController($scope, $interval, $mdSidenav, DashboardData, SensorsDatas)
     {
         var vm = this;
 
+
         // Data
+        vm.sensorsDatas = SensorsDatas;
+        
         vm.dashboardData = DashboardData;
         vm.projects = vm.dashboardData.projects;
+
 
         // Widget 1
         vm.widget1 = vm.dashboardData.widget1;
 
+
         // Widget 2
         vm.widget2 = vm.dashboardData.widget2;
+
 
         // Widget 3
         vm.widget3 = vm.dashboardData.widget3;
 
+
         // Widget 4
         vm.widget4 = vm.dashboardData.widget4;
+
 
         // Widget 5
         vm.widget5 = {
@@ -181,6 +191,7 @@
             {
                 vm.widget5.currentRange = range;
 
+
                 /**
                  * Update main chart data by iterating through the
                  * chart dataset and separately adding every single
@@ -205,6 +216,7 @@
                     };
                 });
 
+
                 /**
                  * Do the same thing for the supporting widgets but they
                  * only have 1 dataset so we can do [0] without needing to
@@ -222,12 +234,14 @@
             {
                 // Run this function once to initialize widget
 
+
                 /**
                  * Update the range for the first time
                  */
                 vm.widget5.changeRange('TW');
             }
         };
+
 
         // Widget 6
         vm.widget6 = {
@@ -277,6 +291,7 @@
             {
                 vm.widget6.currentRange = range;
 
+
                 /**
                  * Update main chart data by iterating through the
                  * chart dataset and separately adding every single
@@ -305,12 +320,14 @@
             {
                 // Run this function once to initialize widget
 
+
                 /**
                  * Update the range for the first time
                  */
                 vm.widget6.changeRange('TW');
             }
         };
+
 
         // Widget 7
         vm.widget7 = {
@@ -319,6 +336,7 @@
             schedule    : vm.dashboardData.widget7.schedule,
             currentRange: 'T'
         };
+
 
         // Widget 8
         vm.widget8 = {
@@ -353,6 +371,7 @@
                 data   : vm.dashboardData.widget8.mainChart
             }
         };
+
 
         // Widget 9
         vm.widget9 = {
@@ -428,6 +447,7 @@
             {
                 vm.widget9.currentRange = range;
 
+
                 /**
                  * Update mini charts. They only have 1 dataset
                  * so we can do [0] without needing to iterate
@@ -438,10 +458,12 @@
                     values: vm.dashboardData.widget9.weeklySpent.chart.values[range]
                 };
 
+
                 vm.widget9.totalSpent.chartData[0] = {
                     key   : vm.dashboardData.widget9.totalSpent.chart.label,
                     values: vm.dashboardData.widget9.totalSpent.chart.values[range]
                 };
+
 
                 vm.widget9.remaining.chartData[0] = {
                     key   : vm.dashboardData.widget9.remaining.chart.label,
@@ -452,6 +474,7 @@
             {
                 // Run this function once to initialize widget
 
+
                 /**
                  * Update the range for the first time
                  */
@@ -459,13 +482,15 @@
             }
         };
 
+
         // Widget 10
         vm.widget10 = vm.dashboardData.widget10;
 
+
         // Widget 11
         vm.widget11 = {
-            title    : vm.dashboardData.widget11.title,
-            table    : vm.dashboardData.widget11.table,
+            title    : 'Raw Sensors Data',
+            table    : vm.sensorsDatas,
             dtOptions: {
                 dom       : '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
                 pagingType: 'simple',

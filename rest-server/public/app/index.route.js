@@ -73,7 +73,25 @@
         $stateProvider
             .state('app', {
                 abstract: true,
-                views   : {
+                    views   : {
+                        'main@'         : {
+                            templateUrl: 'app/core/layouts/content-with-toolbar.html',
+                            controller : 'MainController as vm'
+                        },
+                        'toolbar@app'   : {
+                            templateUrl: 'app/toolbar/layouts/content-with-toolbar/toolbar.html',
+                            controller : 'ToolbarController as vm'
+                        },
+                        'navigation@app': {
+                            templateUrl: '',
+                            controller : 'NavigationController as vm'
+                        },
+                        'quickPanel@app': {
+                            templateUrl: 'app/quick-panel/quick-panel.html',
+                            controller : 'QuickPanelController as vm'
+                        }
+                    }
+                /*views   : {
                     'main@'         : {
                         templateUrl: layouts[layoutStyle].main,
                         controller : 'MainController as vm'
@@ -90,7 +108,7 @@
                         templateUrl: 'app/quick-panel/quick-panel.html',
                         controller : 'QuickPanelController as vm'
                     }
-                }
+                }*/
             });
     }
 

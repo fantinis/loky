@@ -55,6 +55,7 @@ app.all('*', function(req, res, next){
 });
 
 app.use('/', routes);
+app.use('/dashboard-project', routes);
 app.use('/users', users);
 app.use('/hotspot',hotSpotRouter);
 app.use('/home',homeRouter);

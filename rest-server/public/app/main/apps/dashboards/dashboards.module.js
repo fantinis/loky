@@ -4,9 +4,7 @@
 
     angular
         .module('app.dashboards', [
-            'app.dashboards.project',
-            'app.dashboards.server',
-            'app.dashboards.analytics'
+            'app.dashboards.project'            
         ])
         .config(config);
 
