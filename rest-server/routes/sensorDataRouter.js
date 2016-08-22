@@ -16,7 +16,7 @@ sensorDatasRouter.route('/')
     });
 })
 
-.post(Verify.verifyOrdinaryUser, function (req, res, next) {
+.post(function (req, res, next) {
     SensorDatas.create(req.body, function (err, sensorData) {
         if (err) throw err;
         console.log('SensorData created!');
