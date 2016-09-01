@@ -43,3 +43,6 @@ node-moongose
 
 #dashboard folder
 /dashboard
+
+#Temp folder
+/TEST

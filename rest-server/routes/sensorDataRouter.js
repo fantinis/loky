@@ -58,9 +58,9 @@ sensorDatasRouter.route('/sensorsinfo/')
                 AccDataZ: { $last: "$AccDataZ" }
             }
         }
-    ], function (err, hotSpot) {
+    ], function (err, sensorsinfo) {
             if (err) throw err;
-            res.json(hotSpot);
+            res.json(sensorsinfo);
         });
 })
 
@@ -72,9 +72,9 @@ sensorDatasRouter.route('/sensors/')
         { "$project": {"UID": { $toUpper: "$UID" }}},
         { $group : { _id : "$UID" } }
         
-    ], function (err, hotSpot) {
+    ], function (err, sensors) {
         if (err) throw err;
-        res.json(hotSpot);
+        res.json(sensors);
     });
 })
 
